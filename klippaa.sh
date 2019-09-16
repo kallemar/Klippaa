@@ -26,17 +26,14 @@ if [ "$3" == "" ]; then
     exit 1
 fi
 
-i=0
+i=1
 cmd=""
 while IFS=$'\t\r\n' read -r -a Klippi
 do 
-    start=${Klippi[0]}
-    if (($i > 2)) ; then	
-	    cmd+="ffmpeg  -i \"$1\" -ss ${Klippi[0]} -to ${Klippi[1]} -c copy \"$3/$((i-2)) ${Klippi[2]}.mp4\";"
-	    #echo $cmd
-	    #ffmpeg -hide_banner -loglevel panic -i "$1" -ss ${Klippi[0]} -to ${Klippi[1]} -c copy "$3/$((i-2)) ${Klippi[2]}.mp4"
+    if (( ${#Klippi[@]} == 3)) ; then
+        cmd+="ffmpeg  -i \"$1\" -ss ${Klippi[0]} -to ${Klippi[1]} -c copy \"$3/$i ${Klippi[2]}.mp4\";"
+        i=$((i+1))
     fi
-    i=$((i+1))    
 done < "$2"
 echo $cmd
 eval $cmd
