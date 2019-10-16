@@ -9,19 +9,19 @@ usage_info()
 
 # MAIN
 if [ "$1" == "" ]; then
-    echo "No input video file defined"a
+    echo "No input video file defined"
     usage_info
     exit 1 
 fi
 
 if [ "$2" == "" ]; then
-    echo "No  tsv file defined"a
+    echo "No  tsv file defined"
     usage_info
     exit 2
 fi
 
 if [ "$3" == "" ]; then
-    echo "No output folde defined"a
+    echo "No output folde defined"
     usage_info
     exit 1
 fi
@@ -31,9 +31,12 @@ cmd=""
 while IFS=$'\t\r\n' read -r -a Klippi
 do 
     if (( ${#Klippi[@]} == 3)) ; then
-        cmd+="ffmpeg  -i \"$1\" -ss ${Klippi[0]} -to ${Klippi[1]} -c copy \"$3/$i ${Klippi[2]}.mp4\";"
+
+        filename="$(echo ${Klippi[2]} | sed -e 's/[^A-Za-z0-9._-]/_/g').mp4"
+        cmd+="ffmpeg  -i \"$1\" -ss ${Klippi[0]} -to ${Klippi[1]} -c copy \"$3/$i $filename\";"
         i=$((i+1))
+        echo $cmd
     fi
-done < "$2"
+done < <(tail -n "+2" "$2") 
 echo $cmd
 eval $cmd
