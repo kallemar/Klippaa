@@ -21,11 +21,13 @@ if [ "$2" == "" ]; then
 fi
 
 if [ "$3" == "" ]; then
-    echo "No output folde defined"
+    echo "No output folder defined"
     usage_info
     exit 1
 fi
 
+# Add new line end of tsv file
+echo "" >> "$2"
 i=1
 cmd=""
 while IFS=$'\t\r\n' read -r -a Klippi
