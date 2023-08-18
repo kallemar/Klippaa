@@ -6,7 +6,7 @@ Linux or Mac computer. FFmeg installed (https://www.ffmpeg.org/)
 
 ### Usage:
 
-./klippaa.sh <path to input video file> <path to klips.tsv file> <path to output folder>
+`./klippaa.sh <path to input video file> <path to klips.tsv file> <path to output folder>`
 
 ### TSV file format:
 
